@@ -1,0 +1,21 @@
+{
+  "name": "blopost",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "aws-appsync": "^1.3.4",
+    "aws-appsync-react": "^1.1.4",
+    "aws-sdk": "^2.307.0",
+    "graphql-tag": "^2.9.2",
+    "react": "^16.2.0",
+    "react-apollo": "^2.1.11",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
