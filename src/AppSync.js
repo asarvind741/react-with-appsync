@@ -1,6 +1,6 @@
 ﻿export default {
-    "graphqlEndpoint": "https://oi4eweipd5fbdog65pscmrqke4.appsync-api.ap-south-1.amazonaws.com/graphql",
-    "region": "ap-south-1",
-    "authenticationType": "AWS_IAM",
-    "apiKey": "da2-bk3xdmfezrdl7puk4ct32omrza"
+    "graphqlEndpoint": "https://mp7xxj6z5rff7irzsehswq3ppq.appsync-api.us-east-1.amazonaws.com/graphql",
+    "region": "us-east-1",
+    "authenticationType": "API_KEY",
+    "apiKey": "da2-6ihwdr6lljaqno3y4snme6o4bu"
 }
