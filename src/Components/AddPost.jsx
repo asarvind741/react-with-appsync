@@ -13,8 +13,9 @@ export default class AddPost extends Component {
 
     getInitialState = () => ({
         id: '',
-        title: '',
-        author: '',
+        name: '',
+        description: '',
+        priority: ''
     });
 
     handleChange = (field, event) => {
@@ -26,10 +27,10 @@ export default class AddPost extends Component {
     }
 
     handleAdd = () => {
-        const { id, title, author } = this.state;
+        const { id, name, description, priority } = this.state;
 
         this.setState(this.getInitialState(), () => {
-            this.props.onAdd({ id, title, author });
+            this.props.onAdd({ id, name, description, priority });
         });
     }
 
@@ -45,10 +46,13 @@ export default class AddPost extends Component {
                     <label>ID<input type="text" placeholder="ID" value={this.state.id} onChange={this.handleChange.bind(this, 'id')} /></label>
                 </div>
                 <div>
-                    <label>Title<input type="text" placeholder="Title" value={this.state.title} onChange={this.handleChange.bind(this, 'title')} /></label>
+                    <label>Title<input type="text" placeholder="Title" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} /></label>
                 </div>
                 <div>
-                    <label>Author<input type="text" placeholder="Author" value={this.state.author} onChange={this.handleChange.bind(this, 'author')} /></label>
+                    <label>Author<input type="text" placeholder="Author" value={this.state.description} onChange={this.handleChange.bind(this, 'description')} /></label>
+                </div>
+                <div>
+                    <label>Author<input type="text" placeholder="Author" value={this.state.priority} onChange={this.handleChange.bind(this, 'priority')} /></label>
                 </div>
                 <div>
                     <button onClick={this.handleAdd}>Add new post</button>

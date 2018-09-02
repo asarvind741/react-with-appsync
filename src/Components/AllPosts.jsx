@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SubscribeToNewTodo from '../Queries/SubscribeToNewTodo'
 
 export default class AllPosts extends Component {
 
@@ -96,8 +97,8 @@ export default class AllPosts extends Component {
     }
 
     render() {
-        console.log('props--', this.props)
-        const { posts } = this.props;
+        console.log('props--', this.props.posts.getTodos)
+        const posts  = this.props.posts.getTodos;
 
         return (<table width="100%">
             <thead>

@@ -6,7 +6,10 @@ import { graphql, ApolloProvider, compose } from 'react-apollo';
 import * as AWS from 'aws-sdk';
 import AppSync from './AppSync.js';
 import AllPostsQuery from './Queries/AllPostsQuery';
-import AllPosts from './Components/AllPosts'
+import AllPosts from './Components/AllPosts';
+import AddPost from './Components/AddPost'
+import AddPostQuery from './Queries/AddPostQuery';
+import SubscribeToNewTodo from './Queries/SubscribeToNewTodo'
 
 const client = new AWSAppSyncClient({
     url: AppSync.graphqlEndpoint,
@@ -35,6 +38,10 @@ const client = new AWSAppSyncClient({
 
 
 class App extends Component {
+
+    componentWillMount(){
+        this.props.SubscribeToNewTodoA();
+    }
     render() {
         return (
         <div className="App">
@@ -44,6 +51,7 @@ class App extends Component {
             <p className="App-intro">
                 To get started, edit <code>src/App.js</code> and save to reload.
             </p>
+            <NewPostWithData />
             <AllPostsWithData />
         </div>
         );
@@ -56,10 +64,40 @@ const AllPostsWithData = compose(
             fetchPolicy: 'cache-and-network'
         },
         props: (props) => ({
-            posts: props
+            posts: props.data,
+            SubscribeToNewTodoA: params => {
+                props.data.subscribeToMore({
+                    document: SubscribeToNewTodo,
+                    updateQuery: (prev, { subscriptionData: { data : { newTodo } } }) => ({
+                        ...prev,
+                        posts: { posts: [newTodo, ...prev.data] }
+                    })
+                });
+            }
         })
     })
     )(AllPosts);
+
+    const NewPostWithData = graphql(AddPostQuery, {
+        props: (props) => ({
+            onAdd: post => props.mutate({
+                variables: post,
+                optimisticResponse: () => ({ addTodo: { ...post, __typename: 'Todo', version: 1 } }),
+            })
+        }),
+        options: {
+            refetchQueries: [{ query: AllPostsQuery }],
+            update: (dataProxy, { data: { addTodo } }) => {
+                const query = AllPostsQuery;
+                const data = dataProxy.readQuery({ query });
+                console.log("dada", data)
+    
+                data.getTodos.push(addTodo);
+    
+                dataProxy.writeQuery({ query, data });
+            }
+        }
+    })(AddPost);
 
     const WithProvider = () => (
         <ApolloProvider client={client}>
@@ -68,5 +106,7 @@ const AllPostsWithData = compose(
           </Rehydrated>
         </ApolloProvider>
       );
+
+    
 
 export default WithProvider;
